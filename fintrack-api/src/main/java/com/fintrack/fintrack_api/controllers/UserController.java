@@ -1,6 +1,7 @@
 package com.fintrack.fintrack_api.controllers;
 
 import com.fintrack.fintrack_api.DTOs.LoginDTO;
+import com.fintrack.fintrack_api.DTOs.ResponseLoginDTO;
 import com.fintrack.fintrack_api.DTOs.UserDTO;
 import com.fintrack.fintrack_api.entities.User;
 import com.fintrack.fintrack_api.services.UserService;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<ResponseLoginDTO> login(@RequestBody LoginDTO loginDTO) {
         return this.userService.login(loginDTO);
     }
 }

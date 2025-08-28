@@ -1,6 +1,7 @@
 package com.fintrack.fintrack_api.services;
 
 import com.fintrack.fintrack_api.DTOs.LoginDTO;
+import com.fintrack.fintrack_api.DTOs.ResponseLoginDTO;
 import com.fintrack.fintrack_api.DTOs.UserDTO;
 import com.fintrack.fintrack_api.config.JwtConfigToken;
 import com.fintrack.fintrack_api.entities.User;
@@ -38,7 +39,7 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso.");
     }
 
-    public ResponseEntity<LoginDTO> login(LoginDTO loginDTO) {
+    public ResponseEntity<ResponseLoginDTO> login(LoginDTO loginDTO) {
 
         if (loginDTO.getEmail() == null || loginDTO.getPassword() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -55,7 +56,7 @@ public class UserService {
         }
 
         String token = createJWT.generateToken(existingUser.getEmail());
-        LoginDTO responseDTO = new LoginDTO(existingUser, token);
+        ResponseLoginDTO responseDTO = new ResponseLoginDTO(loginDTO, token);
         return ResponseEntity.ok(responseDTO);
     }
 }
