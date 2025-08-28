@@ -42,9 +42,5 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
-    public User(UserDTO userDTO) {
-        this.name = userDTO.getName();
-        this.email = userDTO.getEmail();
-        this.password = userDTO.getPassword();
-    }
+
 }
