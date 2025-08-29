@@ -56,7 +56,7 @@ public class UserService {
         }
 
         String token = createJWT.generateToken(existingUser.getEmail());
-        ResponseLoginDTO responseDTO = new ResponseLoginDTO(loginDTO, token);
+        ResponseLoginDTO responseDTO = new ResponseLoginDTO(existingUser, token);
         return ResponseEntity.ok(responseDTO);
     }
 }
