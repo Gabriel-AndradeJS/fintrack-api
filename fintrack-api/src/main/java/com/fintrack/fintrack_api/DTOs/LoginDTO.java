@@ -13,17 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO {
-    private String name;
     private String email;
     private String password;
-    private String token;
-
-    public LoginDTO(User existingUser, String token) {
-        this.email = existingUser.getEmail();
-        this.name = existingUser.getName();
-        this.password = existingUser.getPassword();
-        this.token = token;
-
-    }
 
 }
