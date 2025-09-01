@@ -2,12 +2,10 @@ package com.fintrack.fintrack_api.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -23,11 +21,12 @@ public class Expenses {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @NotBlank
     private String name;
+
     private Double value;
 
-    @ManyToOne@OneToMany(mappedBy = "user")
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonBackReference
     private User user;
@@ -37,4 +36,5 @@ public class Expenses {
 
     @UpdateTimestamp
     private LocalDateTime updateAt;
+
 }
