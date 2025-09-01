@@ -2,7 +2,7 @@ package com.fintrack.fintrack_api.services;
 
 import com.fintrack.fintrack_api.DTOs.LoginDTO;
 import com.fintrack.fintrack_api.DTOs.ResponseLoginDTO;
-import com.fintrack.fintrack_api.DTOs.UserDTO;
+import com.fintrack.fintrack_api.DTOs.ResponseUserDTO;
 import com.fintrack.fintrack_api.config.JwtConfigToken;
 import com.fintrack.fintrack_api.entities.User;
 import com.fintrack.fintrack_api.repositories.UserRepository;
@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -24,6 +27,13 @@ public class UserService {
     @Autowired
     private JwtConfigToken createJWT;
 
+    public List<ResponseUserDTO> getUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(ResponseUserDTO::new)
+                .collect(Collectors.toList());
+    }
+
     public ResponseEntity<String> createUser(User user) {
 
         boolean userExists = this.userRepository.existsByEmail(user.getEmail());
@@ -33,8 +43,9 @@ public class UserService {
 
         String senhaHash = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(senhaHash);
+        user.setBalance(0.00);
+        user.setCurrentBalance(0.00);
         this.userRepository.save(user);
-        UserDTO userDTO = new UserDTO(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso.");
     }
@@ -59,4 +70,5 @@ public class UserService {
         ResponseLoginDTO responseDTO = new ResponseLoginDTO(existingUser, token);
         return ResponseEntity.ok(responseDTO);
     }
+
 }

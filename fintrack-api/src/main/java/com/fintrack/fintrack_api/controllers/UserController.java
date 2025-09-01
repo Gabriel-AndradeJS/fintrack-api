@@ -2,6 +2,7 @@ package com.fintrack.fintrack_api.controllers;
 
 import com.fintrack.fintrack_api.DTOs.LoginDTO;
 import com.fintrack.fintrack_api.DTOs.ResponseLoginDTO;
+import com.fintrack.fintrack_api.DTOs.ResponseUserDTO;
 import com.fintrack.fintrack_api.DTOs.UserDTO;
 import com.fintrack.fintrack_api.entities.User;
 import com.fintrack.fintrack_api.services.UserService;
@@ -10,12 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping()
+    public List<ResponseUserDTO> getUser() {
+        return this.userService.getUsers();
+    }
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user) {
