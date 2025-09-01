@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,11 +31,12 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Expenses> expenses;
 
-    @OneToOne(mappedBy = "user")
-    private Balance balance;
+    private Double balance;
+
+    private Double currentBalance;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
