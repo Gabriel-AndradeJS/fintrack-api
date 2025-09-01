@@ -1,5 +1,6 @@
 package com.fintrack.fintrack_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,8 +27,9 @@ public class Expenses {
     private String name;
     private Double value;
 
-    @ManyToOne
+    @ManyToOne@OneToMany(mappedBy = "user")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     @CreationTimestamp
