@@ -23,7 +23,7 @@ public class ExpensesController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createExpenses(@RequestBody Expenses expenses){
+    public ResponseEntity<Void> createExpenses(@RequestBody ExpensesDTO expenses){
         this.expensesService.createExpenses(expenses);
          return ResponseEntity.ok().build();
     }

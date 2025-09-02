@@ -2,11 +2,14 @@ package com.fintrack.fintrack_api.services;
 
 import com.fintrack.fintrack_api.DTOs.ExpensesDTO;
 import com.fintrack.fintrack_api.entities.Expenses;
+import com.fintrack.fintrack_api.entities.User;
 import com.fintrack.fintrack_api.repositories.ExpensesRepository;
+import com.fintrack.fintrack_api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,15 +18,30 @@ public class ExpensesService {
     @Autowired
     private ExpensesRepository expensesRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<Expenses> getExpenses() {
         return this.expensesRepository.findAll();
     }
 
-    public void createExpenses(Expenses expenses){
-        if (expenses.getName().equals("") && expenses.getValue().isNaN()) {
+    public void createExpenses(ExpensesDTO expensesDTO){
+
+        if (expensesDTO.getName().equals("") && expensesDTO.getValue().isNaN()) {
             throw new IllegalArgumentException("Name and value must be filled");
         }
-        expensesRepository.save(expenses);
+
+        Optional<User> user = this.userRepository.findById(expensesDTO.getUserId());
+
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        Expenses expensesSave = new Expenses();
+        expensesSave.setName(expensesDTO.getName());
+        expensesSave.setValue(expensesDTO.getValue());
+        expensesSave.setUser(user.get());
+        expensesRepository.save(expensesSave);
     }
 
 }
