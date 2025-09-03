@@ -6,6 +6,7 @@ import com.fintrack.fintrack_api.entities.User;
 import com.fintrack.fintrack_api.repositories.ExpensesRepository;
 import com.fintrack.fintrack_api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +43,27 @@ public class ExpensesService {
         expensesSave.setValue(expensesDTO.getValue());
         expensesSave.setUser(user.get());
         expensesRepository.save(expensesSave);
+    }
+
+    public Expenses updateExpenses(Long id, Expenses expensesDTO) {
+        Expenses expenses = this.expensesRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Expenses not found")
+        );
+
+
+        if (expensesDTO.getName() != null) {
+            expenses.setName(expensesDTO.getName());
+        }
+
+        if (expensesDTO.getValue() != null) {
+            expenses.setValue(expensesDTO.getValue());
+        }
+
+        if (expensesDTO.getUser() != null) {
+            expenses.setUser(expensesDTO.getUser());
+        }
+
+        return this.expensesRepository.save(expenses);
     }
 
 }

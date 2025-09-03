@@ -28,4 +28,10 @@ public class ExpensesController {
          return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Expenses> updateExpenses(@PathVariable Long id, @RequestBody Expenses expenses){
+        Expenses response =  this.expensesService.updateExpenses(id, expenses);
+        return ResponseEntity.ok().body(response);
+    }
+
 }
