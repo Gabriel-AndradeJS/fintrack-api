@@ -71,4 +71,24 @@ public class UserService {
         return ResponseEntity.ok(responseDTO);
     }
 
+    public User update(Long id, User user) {
+        User existingUser = this.userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("User not found")
+        );
+
+        if (user.getName() != null) {
+            existingUser.setName(user.getName());
+        }
+        if (user.getPassword() != null) {
+            String senhaHash = bCryptPasswordEncoder.encode(user.getPassword());
+            existingUser.setPassword(senhaHash);
+        }
+        if (user.getBalance() != null) {
+            existingUser.setBalance(user.getBalance());
+        }
+
+        return this.userRepository.save(existingUser);
+
+    }
+
 }

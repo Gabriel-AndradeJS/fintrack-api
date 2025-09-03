@@ -34,4 +34,9 @@ public class UserController {
     public ResponseEntity<ResponseLoginDTO> login(@RequestBody LoginDTO loginDTO) {
         return this.userService.login(loginDTO);
     }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+       return this.userService.update(id, user);
+    }
 }
