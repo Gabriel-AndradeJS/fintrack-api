@@ -34,4 +34,10 @@ public class ExpensesController {
         return ResponseEntity.ok().body(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteExpenses(@PathVariable Long id) {
+        this.expensesService.deleteExpenses(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

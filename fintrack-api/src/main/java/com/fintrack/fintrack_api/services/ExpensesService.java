@@ -66,4 +66,12 @@ public class ExpensesService {
         return this.expensesRepository.save(expenses);
     }
 
+    public ResponseEntity<Void> deleteExpenses(Long id) {
+        this.expensesRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Expenses not found")
+        );
+        this.expensesRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
