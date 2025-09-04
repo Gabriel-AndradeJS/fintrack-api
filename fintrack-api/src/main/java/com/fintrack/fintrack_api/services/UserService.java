@@ -91,4 +91,13 @@ public class UserService {
 
     }
 
+    public ResponseEntity<Void> deleteUser(Long id) {
+        this.userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("User not found")
+        );
+
+        this.userRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
