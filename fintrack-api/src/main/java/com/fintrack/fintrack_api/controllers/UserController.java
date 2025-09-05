@@ -32,10 +32,10 @@ public class UserController {
         return this.userService.getUserId(id);
     }
 
-//    @GetMapping(value = "/{page}/{limit}")
-//    public Page<User> getUsersPaginated(@PathVariable int page, @PathVariable int limit) {
-//        return this.userService.userPaginated(page, limit);
-//    }
+    @GetMapping(value = "/{page}/{limit}")
+    public ResponseEntity<List<ResponseUserDTO>> getUsersPaginated(@PathVariable int page, @PathVariable int limit) {
+        return this.userService.userPaginated(page, limit);
+    }
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user) {

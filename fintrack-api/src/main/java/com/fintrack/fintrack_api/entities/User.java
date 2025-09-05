@@ -53,5 +53,4 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
-
 }

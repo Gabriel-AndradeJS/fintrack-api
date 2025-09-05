@@ -41,15 +41,18 @@ public class UserService {
        User user = this.userRepository.findById(id).orElseThrow(
                () -> new IllegalArgumentException("User not found")
        );
-       return ResponseEntity.ok(new ResponseUserDTO(user));
+       return ResponseEntity.ok().body(new ResponseUserDTO(user));
     }
 
-//    public Page<User> userPaginated(int page, int limit) {
-//        if (limit > 15) limit = 15;
-//        System.out.println(limit);
-//        Pageable pageable = PageRequest.of(page, limit);
-//        return this.userRepository.findAll(pageable);
-//    }
+    public ResponseEntity<List<ResponseUserDTO>> userPaginated(int page, int limit) {
+        if (limit > 15) limit = 15;
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<User> users = this.userRepository.findAll(pageable);
+        List<ResponseUserDTO> userDTOs = users.stream()
+                .map(ResponseUserDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
+    }
 
     public ResponseEntity<String> createUser(User user) {
 
